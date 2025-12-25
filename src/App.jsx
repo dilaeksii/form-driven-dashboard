@@ -13,6 +13,7 @@ import { Settings } from "./pages/Settings";
 import { AppLayout } from "./layouts/AppLayout";
 import { AuthLayout } from "./layouts/AuthLayout";
 
+
 function App() {
   const loggedIn = false; {/* Kullanıcı logged in olup olmadığının kontrol gerekiyor */} 
 
