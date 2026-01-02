@@ -1,20 +1,26 @@
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
-export function Login() {
+export function Login({isAuth, setIsAuth}) {
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm({ mode: "onChange" });
 
-  const onSubmit = (e) => {
-    console.log(e);
+  let history = useHistory(); 
+
+  const onSubmit = (data) => {
+    localStorage.setItem("auth", "true");
+    setIsAuth(true);
+    history.push("/dashboard");
   }
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
       <div className="w-sm bg-white border rounded-xl px-10 py-16 shadow-xl">
-        <h1 className="text-2xl font-semibold pb-4">Sign In</h1>
+        <h1 className="text-2xl font-semibold pb-1">User Authentication</h1>
+        <p className="pb-4">Please enter your credentials to continue</p>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
             Email
@@ -23,7 +29,7 @@ export function Login() {
               name="email"
               id="email"
               placeholder="Please enter your email address."
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.email ? "border-red-500 focus:border-red-500 focus:ring-red-500" : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"}`}
               {...register("email", {
                 required: "Email is required.",
                 pattern: {
@@ -42,7 +48,7 @@ export function Login() {
               name="password"
               id="password"
               placeholder="Please enter your password."
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.password ? "border-red-500 focus:border-red-500 focus:ring-red-500" : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"}`}
               {...register("password", {
                 required: "Password is required.",
                 maxLength: {

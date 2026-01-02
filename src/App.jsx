@@ -1,5 +1,6 @@
 import {
   BrowserRouter,
+  Redirect,
   Route,
   Switch,
 } from "react-router-dom/cjs/react-router-dom";
@@ -12,42 +13,49 @@ import { Workflows } from "./pages/Workflows";
 import { Settings } from "./pages/Settings";
 import { AppLayout } from "./layouts/AppLayout";
 import { AuthLayout } from "./layouts/AuthLayout";
-
+import { useState } from "react";
+import { PrivateRoute } from "./routes/PrivateRoute";
 
 function App() {
-  const loggedIn = false; {/* Kullanıcı logged in olup olmadığının kontrol gerekiyor */} 
+  const [isAuth, setIsAuth] = useState(() => {
+    return localStorage.getItem("auth") === "true";
+  });
+  {
+    /* Kullanıcı logged in olup olmadığının kontrol gerekiyor */
+  }
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-         {loggedIn ? <Redirect to="/dashboard" /> : <Login />} {/* Kullanıcı logged in ise direkt dashboard sayfasına yönlendirir. */} 
+          {<Redirect to={isAuth ? "/dashboard" : "/login"} />}{" "}
+          {/* Kullanıcı logged in ise direkt dashboard sayfasına yönlendirir. */}
         </Route>
         <Route path="/login">
           <AuthLayout>
-            <Login />
+            <Login isAuth={isAuth} setIsAuth={setIsAuth} />
           </AuthLayout>
         </Route>
-        <Route path="/dashboard">
-          <AppLayout>
+        <PrivateRoute path="/dashboard" isAuth={isAuth}>
+          <AppLayout setIsAuth={setIsAuth}>
             <Dashboard />
           </AppLayout>
-        </Route>
-        <Route path="/reports">
-          <AppLayout>
+        </PrivateRoute>
+        <PrivateRoute path="/reports" isAuth={isAuth}>
+          <AppLayout setIsAuth={setIsAuth}>
             <Reports />
           </AppLayout>
-        </Route>
-        <Route path="/workflows">
-          <AppLayout>
+        </PrivateRoute>
+        <PrivateRoute path="/workflows" isAuth={isAuth}>
+          <AppLayout setIsAuth={setIsAuth}>
             <Workflows />
           </AppLayout>
-        </Route>
-        <Route path="/settings">
-          <AppLayout>
+        </PrivateRoute>
+        <PrivateRoute path="/settings" isAuth={isAuth}>
+          <AppLayout setIsAuth={setIsAuth}>
             <Settings />
           </AppLayout>
-        </Route>
+        </PrivateRoute>
       </Switch>
     </BrowserRouter>
   );
