@@ -42,13 +42,6 @@ export function Dashboard() {
 
   const actions = [
     {
-      title: "Create Workflow",
-      subtitle: "New automation",
-      to: "/workflows",
-      icon: "+",
-      theme: "text-blue-500",
-    },
-    {
       title: "Review Pending",
       subtitle: "37 items need action",
       to: "/reports",
@@ -92,7 +85,7 @@ export function Dashboard() {
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-2 gap-8 mt-6 place-items-center">
+      <div className="grid grid-cols-2 gap-8 mt-10 items-stretch place-items-center">
         <div className="w-96 mt-10 border rounded bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition p-6">
           <a href="#" className="flex justify-self-end text-blue-500 mb-4">
             View All
