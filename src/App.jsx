@@ -15,6 +15,7 @@ import { AppLayout } from "./layouts/AppLayout";
 import { AuthLayout } from "./layouts/AuthLayout";
 import { useState } from "react";
 import { PrivateRoute } from "./routes/PrivateRoute";
+import "flowbite";
 
 function App() {
   const [isAuth, setIsAuth] = useState(() => {
@@ -23,6 +24,7 @@ function App() {
   {
     /* Kullanıcı logged in olup olmadığının kontrol gerekiyor */
   }
+  console.log("flowbite loaded");
 
   return (
     <BrowserRouter>
